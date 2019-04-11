@@ -9,18 +9,20 @@ import { ContextSpy } from "./backend/spies/contextSpy";
 import { TimeSpy } from "./backend/spies/timeSpy";
 import { CanvasSpy } from "./backend/spies/canvasSpy";
 import { Program } from "./backend/webGlObjects/webGlObjects";
-import { CaptureMenu } from "./embeddedFrontend/captureMenu/captureMenu";
-import { ResultView } from "./embeddedFrontend/resultView/resultView";
+// import { CaptureMenu } from "./embeddedFrontend/captureMenu/captureMenu";
+// import { ResultView } from "./embeddedFrontend/resultView/resultView";
 
 export interface IAvailableContext {
     readonly canvas: HTMLCanvasElement;
     readonly contextSpy: ContextSpy;
 }
 
-export const EmbeddedFrontend = {
-    CaptureMenu,
-    ResultView,
-};
+// export const EmbeddedFrontend = {
+//     CaptureMenu,
+//     ResultView,
+// };
+type CaptureMenu = any;
+type ResultView = any;
 
 export class Spector {
     public static getFirstAvailable3dContext(canvas: HTMLCanvasElement): WebGLRenderingContexts {
@@ -64,8 +66,8 @@ export class Spector {
     private captureNextCommands: number;
     private quickCapture: boolean;
     private capturingContext: ContextSpy;
-    private captureMenu: CaptureMenu;
-    private resultView: ResultView;
+    private captureMenu: CaptureMenu = null;
+    private resultView: ResultView = null;
     private retry: number;
     private noFrameTimeout = -1;
     private marker: string;
@@ -94,7 +96,7 @@ export class Spector {
             this.captureMenu.onPauseRequested.add(this.pause, this);
             this.captureMenu.onPlayRequested.add(this.play, this);
             this.captureMenu.onPlayNextFrameRequested.add(this.playNextFrame, this);
-            this.captureMenu.onCaptureRequested.add((info) => {
+            this.captureMenu.onCaptureRequested.add((info: { ref: HTMLCanvasElement; }) => {
                 if (info) {
                     this.captureCanvas(info.ref);
                 }
@@ -117,28 +119,28 @@ export class Spector {
     }
 
     public getResultUI(): ResultView {
-        if (!this.resultView) {
-            this.resultView = new ResultView();
-            this.resultView.onSourceCodeChanged.add((sourceCodeEvent) => {
-                this.rebuildProgramFromProgramId(sourceCodeEvent.programId,
-                    sourceCodeEvent.sourceVertex,
-                    sourceCodeEvent.sourceFragment,
-                    (program) => {
-                        this.referenceNewProgram(sourceCodeEvent.programId, program);
-                        this.resultView.showSourceCodeError(null);
-                    },
-                    (error) => {
-                        this.resultView.showSourceCodeError(error);
-                    });
-            });
-        }
+        // if (!this.resultView) {
+        //     this.resultView = new ResultView();
+        //     this.resultView.onSourceCodeChanged.add((sourceCodeEvent) => {
+        //         this.rebuildProgramFromProgramId(sourceCodeEvent.programId,
+        //             sourceCodeEvent.sourceVertex,
+        //             sourceCodeEvent.sourceFragment,
+        //             (program) => {
+        //                 this.referenceNewProgram(sourceCodeEvent.programId, program);
+        //                 this.resultView.showSourceCodeError(null);
+        //             },
+        //             (error) => {
+        //                 this.resultView.showSourceCodeError(error);
+        //             });
+        //     });
+        // }
         return this.resultView;
     }
 
     public getCaptureUI(): CaptureMenu {
-        if (!this.captureMenu) {
-            this.captureMenu = new CaptureMenu();
-        }
+        // if (!this.captureMenu) {
+        //     this.captureMenu = new CaptureMenu();
+        // }
         return this.captureMenu;
     }
 

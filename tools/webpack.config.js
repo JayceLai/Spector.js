@@ -10,9 +10,9 @@ var buildConfig = function(env) {
         watch: !isProd,
         context: MAIN_DIR,
         entry: [
-            "./vendors/prism.css",
-            "./vendors/prism.js",
-            "./vendors/ace.js",
+            // "./vendors/prism.css",
+            // "./vendors/prism.js",
+            // "./vendors/ace.js",
             "./src/spector.ts"
         ],
         output: {
@@ -27,7 +27,7 @@ var buildConfig = function(env) {
             hints: false
         },
         resolve: {
-            extensions: [".ts", ".tsx", ".js", ".css", ".sass"]
+            extensions: [".ts", ".tsx", ".js"]//, ".css", ".sass"]
         },
         devtool: isProd ? "none" : "source-map",
         mode: isProd ? "production" : "development",
@@ -40,40 +40,40 @@ var buildConfig = function(env) {
                     declaration: false
                 }
             }, {
-                test: /\.scss$/,
-                use: [ "style-loader?insertInto=html", "css-loader", "sass-loader" ]
-            }, {
-                test: /\.css$/,
-                use: [ "style-loader?insertInto=html", "css-loader" ]
-            }, {
-                test: /prism.js$/,
-                use: [ "exports-loader?Prism" ]
-            }, {
-                test: /ace.js$/,
-                use: [ "exports-loader?ace" ]
-            }, {
+            //     test: /\.scss$/,
+            //     use: [ "style-loader?insertInto=html", "css-loader", "sass-loader" ]
+            // }, {
+            //     test: /\.css$/,
+            //     use: [ "style-loader?insertInto=html", "css-loader" ]
+            // }, {
+            //     test: /prism.js$/,
+            //     use: [ "exports-loader?Prism" ]
+            // }, {
+            //     test: /ace.js$/,
+            //     use: [ "exports-loader?ace" ]
+            // }, {
                 test: /spector.js$/,
                 use: [ "exports-loader?SPECTOR" ]
             }]
         }
     };
 
-    if (!isProd) {
-        config.devtool = "nosources-source-map";
+    // if (!isProd) {
+    //     config.devtool = "nosources-source-map";
 
-        // Source Map Remapping for dev tools.
-        config.output.devtoolModuleFilenameTemplate = (info) => {
-            info.resourcePath = path.normalize(info.resourcePath);
+    //     // Source Map Remapping for dev tools.
+    //     config.output.devtoolModuleFilenameTemplate = (info) => {
+    //         info.resourcePath = path.normalize(info.resourcePath);
 
-            console.error(info.resourcePath);
+    //         console.error(info.resourcePath);
 
-            // if (!path.isAbsolute(info.resourcePath)) {
-            //     info.resourcePath = path.join(DEV_DIR, info.resourcePath);
-            // }
+    //         // if (!path.isAbsolute(info.resourcePath)) {
+    //         //     info.resourcePath = path.join(DEV_DIR, info.resourcePath);
+    //         // }
 
-            return `../${info.resourcePath.replace(/\\/g, "/")}`;
-        };
-    }
+    //         return `../${info.resourcePath.replace(/\\/g, "/")}`;
+    //     };
+    // }
 
     return config;
 }

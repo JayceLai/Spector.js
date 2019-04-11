@@ -2,11 +2,11 @@
     "compilerOptions": {
         "outDir": "../.temp/tsc/",
         "rootDir": "./",
-        "sourceMap": true,
+        "sourceMap": false,
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "declaration":true,
+        "declaration": true,
         "experimentalDecorators": true,
         "module": "es6",
         "moduleResolution": "node",
